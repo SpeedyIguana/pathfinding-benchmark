@@ -21,7 +21,7 @@ def map_load(
             np.array([1, 0, 0, 1], dtype="float32"),
             Block.LAVA,
         ),
-        # Assume agent always starts on grass
+        # Assume agent always starts and ends on grass
         (
             np.array([1, 1, 1, 1], dtype="float32"),
             Block.GRASS,
