@@ -21,7 +21,7 @@ def map_load(
             np.array([1, 0, 0, 1], dtype="float32"),
             Block.LAVA,
         ),
-        # Assume agent and destination as grass
+        # Assume agent always starts on grass
         (
             np.array([1, 1, 1, 1], dtype="float32"),
             Block.GRASS,
@@ -36,7 +36,7 @@ def map_load(
         for t_arr, t_block in _blocks:
             if np.array_equal(arr, t_arr):
                 return t_block
-        raise Exception("Unexpected clr found: %s", arr)
+        raise Exception(f"Unexpected clr found {arr} in map {file_path}")
 
     img = mpl_image.imread(
         file_path,
@@ -61,5 +61,5 @@ def map_load(
     return Grid_Map(
         arr=[[map_block(clr_cell) for clr_cell in unit_row] for unit_row in img],
         starts=starts,
-        goals=goals
+        goals=goals,
     )
