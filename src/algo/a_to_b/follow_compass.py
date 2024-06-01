@@ -40,7 +40,6 @@ class CompassWalker(AToBWalker):
             )
 
             new_pos = list(curr_pos)
-            # alternate movement in x then y
             new_pos[move_order] += diff[move_order]
             move_order = (move_order + 1) % 2
 
