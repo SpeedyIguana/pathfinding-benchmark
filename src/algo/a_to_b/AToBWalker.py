@@ -10,7 +10,7 @@ class AToBWalker(ABC):
     @abstractmethod
     def calculate_path(
         mapp: Grid_Map,
-        start_pos: Tuple[int, int],
+        pos_start: Tuple[int, int],
         destination_pos: Tuple[int, int],
     ) -> Result:
         """This function traverses through the map and find a path from the starting position to the desired ending position

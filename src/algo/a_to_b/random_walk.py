@@ -15,15 +15,15 @@ class RandomWalk(AToBWalker):
 
     def calculate_path(
         mapp: Grid_Map,
-        start_pos: Tuple[int, int],
+        pos_start: Tuple[int, int],
         destination_pos: Tuple[int, int],
     ) -> Result:
         moves: List[Move] = [x for x in Move]
 
         selected_path: List[Tuple[int, int]] = []
-        selected_path.append(start_pos)
+        selected_path.append(pos_start)
 
-        curr_pos = start_pos
+        curr_pos = pos_start
 
         number_of_comparisons: int = 0
 
@@ -47,6 +47,7 @@ class RandomWalk(AToBWalker):
             curr_pos = new_pos
 
         return Result(
+            algo_name=__name__,
             selected_path=selected_path,
             number_of_comparisons=number_of_comparisons,
         )

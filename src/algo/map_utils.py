@@ -11,13 +11,19 @@ class Block(Enum):
 class Grid_Map:
     def __init__(
         self: Self,
+        name: str,
         arr: List[List[Block]],
         starts: Set[Tuple[int, int]],
         goals: Set[Tuple[int, int]],
+        width: int,
+        height: int,
     ):
+        self._name = name
         self._arr = arr
-        self._starts = (starts,)
+        self._starts = starts
         self._goals = goals
+        self._width: int = width
+        self._height: int = height
 
     def get_block_at(
         self: Self,
@@ -28,12 +34,12 @@ class Grid_Map:
 
     def get_starts(
         self: Self,
-    ):
+    ) -> Set[Tuple[int, int]]:
         return self._starts
 
     def get_goals(
         self: Self,
-    ):
+    ) -> Set[Tuple[int, int]]:
         return self._goals
 
 
@@ -69,6 +75,14 @@ class Move(Enum):
     W = 8
 
 
+moveset: Dict[Move, List[int]] = {
+    Move.S: [0, 1],
+    Move.N: [0, -1],
+    Move.E: [1, 0],
+    Move.W: [-1, 0],
+}
+
+
 def get_new_position(
     mapp: Grid_Map,
     pos: Tuple[int, int],
@@ -76,7 +90,12 @@ def get_new_position(
 ) -> Tuple[bool, Tuple[int, int]]:
     if not isinstance(move, Move):
         raise ValueError("`move` must be of type `Move`")
-    raise NotImplementedError
+    if not move in moveset:
+        raise Exception(f"Move {move} does not have movement implemented")
+    x, y = tuple([sum(x) for x in zip(list(pos), moveset.get(move))])
+    if x < 0 or y < 0 or x >= mapp._width or y >= mapp._height:
+        return False, (-1, -1)
+    return True, (x, y)
 
 
 def is_path_valid(
