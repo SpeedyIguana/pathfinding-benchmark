@@ -30,7 +30,12 @@ class Grid_Map:
         x: int,
         y: int,
     ) -> Block:
-        return self._arr[y][x]
+        try:
+            return self._arr[y][x]
+        except IndexError as e:
+            raise Exception(
+                f"Error in trying to access a block outside of the map:{self._name} at position {(x, y)=}"
+            )
 
     def get_starts(
         self: Self,
@@ -55,7 +60,7 @@ movement_costs: Dict[Tuple[Block, Block], int] = {
     # From Lava
     (Block.LAVA, Block.GRASS): 20,
     (Block.LAVA, Block.WATER): 10,
-    (Block.LAVA, Block.LAVA): 30,
+    (Block.LAVA, Block.LAVA): 1e3,
 }
 
 
@@ -93,9 +98,10 @@ def get_new_position(
     if not move in moveset:
         raise Exception(f"Move {move} does not have movement implemented")
     x, y = tuple([sum(x) for x in zip(list(pos), moveset.get(move))])
-    if x < 0 or y < 0 or x >= mapp._width or y >= mapp._height:
-        return False, (-1, -1)
-    return True, (x, y)
+    out_of_bounds: bool = (
+        (x < 0) or (y < 0) or (x > mapp._width - 1) or (y > mapp._height - 1)
+    )
+    return not out_of_bounds, (x, y)
 
 
 def is_path_valid(
@@ -110,6 +116,6 @@ def cost_between_posA_posB(
     pos_A: Tuple[int, int],
     pos_B: Tuple[int, int],
 ) -> int:
-    block_A = get_block_on_map(mapp, pos_A)
-    block_B = get_block_on_map(mapp, pos_B)
+    block_A = mapp.get_block_at(pos_A[0], pos_A[1])
+    block_B = mapp.get_block_at(pos_B[0], pos_B[1])
     return get_movement_cost(block_A, block_B)

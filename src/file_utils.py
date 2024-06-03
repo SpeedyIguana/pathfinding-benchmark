@@ -70,8 +70,8 @@ def map_load(
         arr=[[map_block(clr_cell) for clr_cell in unit_row] for unit_row in img],
         starts=starts,
         goals=goals,
-        width=img_obj.shape[0],
-        height=img_obj.shape[1],
+        width=img_obj.shape[1],
+        height=img_obj.shape[0],
     )
 
 

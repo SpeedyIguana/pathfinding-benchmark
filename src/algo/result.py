@@ -11,5 +11,6 @@ class Result:
         self.algo_name = algo_name
         self.selected_path: List[Tuple[int, int]] = selected_path
         self.number_of_comparisons: int = number_of_comparisons
-        self.time_taken: float = 0.0 # to be overwritten
+        # time_taken measured in ns
+        self.time_taken: int = 0
 
