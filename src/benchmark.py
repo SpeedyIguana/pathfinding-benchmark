@@ -57,7 +57,7 @@ for GridMap in a_to_b_maps:
                 res.time_taken = time_end - time_start
                 outcomes.append(
                     (
-                        GridMap.map_name,
+                        GridMap.name,
                         pos_start,
                         pos_end,
                         res,
