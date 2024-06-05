@@ -18,6 +18,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Analysing the code with pylint
+      - uses: actions/checkout@v4
+      - name: running code to see if it passes
         run: |
-          pylint $(git ls-files '*.py')
+          python src/benchmark.py
