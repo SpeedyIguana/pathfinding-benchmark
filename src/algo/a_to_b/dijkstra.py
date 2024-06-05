@@ -1,8 +1,12 @@
-from algo.a_to_b.a_to_b_abstract import AToBWalker
+"""
+Module contains the Dijstra's algo implementation
+"""
+
 from typing import Tuple, List, Set
+from queue import PriorityQueue
+from algo.a_to_b.a_to_b_abstract import AToBWalker
 from algo.map_utils import cost_between_points, GridMap, Move, get_new_position
 from algo.result import Result
-from queue import PriorityQueue
 
 
 # pylint: disable=locally-disabled, too-few-public-methods
@@ -59,9 +63,9 @@ class Dijkstra(AToBWalker):
 
             if curr_pos == destination_pos:
                 return Result(
-                    algo_name=__name__,
-                    selected_path=selected_path,
-                    number_of_comparisons=number_of_comparisons,
+                    __name__,
+                    selected_path,
+                    number_of_comparisons,
                 )
 
             for mv in Move:

@@ -54,7 +54,7 @@ class CompassWalker(AToBWalker):
             curr_pos = tuple(new_pos)
 
         return Result(
-            algo_name=__name__,
-            selected_path=selected_path,
-            number_of_comparisons=number_of_comparisons,
+            __name__,
+            selected_path,
+            number_of_comparisons,
         )

@@ -1,7 +1,15 @@
+"""
+Holds the Result class
+"""
+
 from typing import Self, List, Tuple
 
 
+# pylint: disable=locally-disabled, too-few-public-methods
 class Result:
+    """
+    Result class will hold all of our relavant data for benchmarking
+    """
     def __init__(
         self: Self,
         algo_name: str,
