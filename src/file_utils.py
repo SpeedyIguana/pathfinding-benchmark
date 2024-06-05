@@ -1,10 +1,15 @@
+"""
+Holds all the utils to open map files and output to map files
+In the future, it should also hold outputting benchmarking graphs
+"""
+
 from typing import List, Tuple
 import os
 
 from matplotlib import image as mpl_image
 from PIL import Image as pil_image
-from algo.map_utils import Block, Grid_Map
 import numpy as np
+from algo.map_utils import Block, GridMap
 
 _blocks = (
     (
@@ -33,13 +38,21 @@ _blocks = (
 
 def map_load(
     file_path: str,
-) -> Grid_Map:
+) -> GridMap:
+    """opens a png map file to generate a map
+
+    Args:
+        file_path (str): file path of the png
+
+    Returns:
+        Grid_Map: the generated map
+    """
 
     def map_block(arr):
         for t_arr, t_block in _blocks:
             if np.array_equal(arr, t_arr):
                 return t_block
-        raise Exception(f"Unexpected clr found {arr} in map {file_path}")
+        raise ValueError(f"Unexpected clr found {arr} in map {file_path}")
 
     img_obj = mpl_image.imread(
         file_path,
@@ -49,39 +62,53 @@ def map_load(
     starts = set()
     goals = set()
 
-    for y in range(len(img)):
-        for x in range(len(img[y])):
+    for y, col in enumerate(img):
+        for x, cell in enumerate(col):
             if np.array_equal(
                 np.array([0, 0, 0, 1], dtype="float32"),
-                img[y][x],
+                cell,
             ):
                 goals.add(tuple((x, y)))
             elif np.array_equal(
                 np.array([1, 1, 1, 1], dtype="float32"),
-                img[y][x],
+                cell,
             ):
                 starts.add(tuple((x, y)))
 
     if len(starts) == 0 or len(goals) == 0:
-        raise Exception(f"Missing start or end positions in map {file_path}")
+        raise ValueError(f"Missing start or end positions in map {file_path}")
 
-    return Grid_Map(
+    return GridMap(
         name=file_path,
         arr=[[map_block(clr_cell) for clr_cell in unit_row] for unit_row in img],
-        starts=starts,
-        goals=goals,
-        width=img_obj.shape[1],
-        height=img_obj.shape[0],
+        key_points=(starts, goals),
+        shape=(img_obj.shape[1], img_obj.shape[0]),
     )
 
 
 def output_image_to_file(
     map_name: str,
     algo_name: str,
-    mapp: Grid_Map,
+    mapp: GridMap,
     selected_path: List[Tuple[int, int]],
     clr_path=np.array([186 / 255, 48 / 255, 206 / 255], dtype="float32"),
 ) -> None:
+    """Takes a map and outputs to a png with the chosen path
+
+    Args:
+        map_name (str): helps with the outputted file name
+        algo_name (str): helps with the outputted file name
+        mapp (Grid_Map): helps with the outputted file name
+        selected_path (List[Tuple[int, int]]): helps with the outputted file name
+        clr_path (np.array, optional): helps with the outputted
+          file name. Defaults to np.array([186 / 255, 48 / 255, 206 / 255], dtype="float32").
+
+    Raises:
+        Exception: if an unexpected block was found
+
+    Returns:
+        None
+    """
 
     pos_start = selected_path[0]
     pos_end = selected_path[-1]
@@ -90,9 +117,9 @@ def output_image_to_file(
         for t_arr, t_block in _blocks:
             if block == t_block:
                 return t_arr[0:3]
-        raise Exception(f"Unexpected block found {block}")
+        raise ValueError(f"Unexpected block found {block}")
 
-    arr = list(map(lambda x: list(map(map_block_to_clr, x)), mapp._arr))
+    arr = list(map(lambda x: list(map(map_block_to_clr, x)), mapp.arr))
 
     for pos in selected_path:
         x, y = pos
@@ -115,4 +142,3 @@ def output_image_to_file(
         exist_ok=True,
     )
     img.save(save_name)
-    return

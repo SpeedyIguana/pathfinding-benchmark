@@ -13,4 +13,3 @@ class Result:
         self.number_of_comparisons: int = number_of_comparisons
         # time_taken measured in ns
         self.time_taken: int = 0
-
