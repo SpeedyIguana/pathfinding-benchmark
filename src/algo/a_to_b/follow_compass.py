@@ -1,11 +1,14 @@
-import random
-from algo.a_to_b.AToBWalker import AToBWalker
-from abc import ABC, abstractmethod
+"""
+Module contains simple compass follower
+"""
+
 from typing import Tuple, List
-from algo.map_utils import Grid_Map
+from algo.a_to_b.a_to_b_abstract import AToBWalker
+from algo.map_utils import GridMap
 from algo.result import Result
 
 
+# pylint: disable=locally-disabled, too-few-public-methods
 class CompassWalker(AToBWalker):
     """
     Here, the agent simply follows the compass.
@@ -14,8 +17,9 @@ class CompassWalker(AToBWalker):
     path given their goal without optimizing for cost.
     """
 
+    @staticmethod
     def calculate_path(
-        mapp: Grid_Map,
+        mapp: GridMap,
         pos_start: Tuple[int, int],
         destination_pos: Tuple[int, int],
     ) -> Result:
@@ -50,7 +54,7 @@ class CompassWalker(AToBWalker):
             curr_pos = tuple(new_pos)
 
         return Result(
-            algo_name=__name__,
-            selected_path=selected_path,
-            number_of_comparisons=number_of_comparisons,
+            __name__,
+            selected_path,
+            number_of_comparisons,
         )
