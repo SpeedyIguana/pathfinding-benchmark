@@ -18,7 +18,7 @@ class Grid_Map:
         width: int,
         height: int,
     ):
-        self._name = name
+        self.name = name
         self._arr = arr
         self._starts = starts
         self._goals = goals
@@ -34,7 +34,7 @@ class Grid_Map:
             return self._arr[y][x]
         except IndexError as e:
             raise Exception(
-                f"Error in trying to access a block outside of the map:{self._name} at position {(x, y)=}"
+                f"Error in trying to access a block outside of the map:{self.name} at position {(x, y)=}"
             )
 
     def get_starts(

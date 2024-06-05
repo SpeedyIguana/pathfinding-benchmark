@@ -1,3 +1,7 @@
+"""
+Main runtime for benchmarking
+"""
+
 from typing import Dict, List, Tuple
 import time
 
@@ -28,12 +32,12 @@ a_to_b_algos: List[AToBWalker] = [
 
 outcomes: List[
     Tuple[
-        str,                # grid
-        Tuple[int, int],    # pos_start
-        Tuple[int, int],    # pos_end
-        Result,             # res
+        str,  # grid
+        Tuple[int, int],  # pos_start
+        Tuple[int, int],  # pos_end
+        Result,  # res
     ]
-] = list()
+] = []
 
 time_start: int = 0
 time_end: int = 0
@@ -53,7 +57,7 @@ for grid_map in a_to_b_maps:
                 res.time_taken = time_end - time_start
                 outcomes.append(
                     (
-                        grid_map._name,
+                        grid_map.name,
                         pos_start,
                         pos_end,
                         res,
