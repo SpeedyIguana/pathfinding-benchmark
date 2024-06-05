@@ -21,4 +21,4 @@ jobs:
       - uses: actions/checkout@v4
       - name: running code to see if it passes
         run: |
-          python src/benchmark.py
+          ls -la && python src/benchmark.py
