@@ -5,8 +5,8 @@ Module contains the Dijstra's algo implementation
 from typing import Tuple, List, Set
 from queue import PriorityQueue
 from algo.a_to_b.a_to_b_abstract import AToBWalker
-from algo.map_utils import cost_between_points, GridMap, Move, get_new_position
 from algo.result import Result
+from utils.map_utils import cost_between_points, GridMap, Move, get_new_position
 
 
 # pylint: disable=locally-disabled, too-few-public-methods
