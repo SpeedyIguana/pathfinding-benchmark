@@ -82,7 +82,7 @@ class AStar(AToBWalker):
                 if t_new_pos not in visited:
                     pq.put(
                         (
-                            bird_path(t_new_pos, destination_pos) + curr_cost + t_cost,
+                            heuristic(t_new_pos, destination_pos) + curr_cost + t_cost,
                             (t_new_pos, selected_path + [curr_pos]),
                         )
                     )
