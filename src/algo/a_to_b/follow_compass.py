@@ -4,8 +4,8 @@ Module contains simple compass follower
 
 from typing import Tuple, List
 from algo.a_to_b.a_to_b_abstract import AToBWalker
-from algo.map_utils import GridMap
 from algo.result import Result
+from utils.map_utils import GridMap
 
 
 # pylint: disable=locally-disabled, too-few-public-methods

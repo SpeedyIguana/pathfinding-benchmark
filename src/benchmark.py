@@ -10,9 +10,9 @@ from algo.a_to_b.a_to_b_abstract import AToBWalker
 from algo.a_to_b.follow_compass import CompassWalker
 from algo.a_to_b.dijkstra import Dijkstra
 from algo.a_to_b.a_star import AStar
-from algo.map_utils import GridMap
 from algo.result import Result
-from file_utils import map_load, output_image_to_file
+from utils.map_utils import GridMap
+from utils.file_utils import map_load, output_image_to_file
 
 
 a_to_b_map_paths = [

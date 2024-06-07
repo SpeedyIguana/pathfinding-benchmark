@@ -4,7 +4,7 @@ This module will hold the abstract class
 
 from abc import ABC, abstractmethod
 from typing import Tuple
-from algo.map_utils import GridMap
+from utils.map_utils import GridMap
 from algo.result import Result
 
 

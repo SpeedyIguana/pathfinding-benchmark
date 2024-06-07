@@ -5,8 +5,9 @@ Module contains the A star implementation
 from typing import Tuple, List, Set
 from queue import PriorityQueue
 from algo.a_to_b.a_to_b_abstract import AToBWalker
-from algo.map_utils import cost_between_points, GridMap, Move, get_new_position
 from algo.result import Result
+from utils.map_utils import cost_between_points, GridMap, Move, get_new_position
+from utils.heuristics import bird_path as heuristic
 
 
 # pylint: disable=locally-disabled, too-few-public-methods
@@ -29,16 +30,10 @@ class AStar(AToBWalker):
                 f"Start position {pos_start} should not be the same as the destination position."
             )
 
-        def bird_path(
-            strt: Tuple[int, int],
-            end: Tuple[int, int],
-        ) -> float:
-            return (((strt[0] - end[0]) ** 2) + ((strt[1] - end[1]) ** 2)) ** 0.5
-
         number_of_comparisons: int = 0
 
         curr_pos: Tuple[int, int] = pos_start
-        curr_cost: float = bird_path(curr_pos, destination_pos)
+        curr_cost: float = heuristic(curr_pos, destination_pos)
         pq: PriorityQueue = PriorityQueue()
 
         visited: Set[Tuple[int, int]] = set()
@@ -56,7 +51,7 @@ class AStar(AToBWalker):
             if t_new_pos not in visited:
                 pq.put(
                     (
-                        bird_path(t_new_pos, destination_pos) + curr_cost + t_cost,
+                        heuristic(t_new_pos, destination_pos) + curr_cost + t_cost,
                         (t_new_pos, [curr_pos]),
                     )
                 )
@@ -87,7 +82,7 @@ class AStar(AToBWalker):
                 if t_new_pos not in visited:
                     pq.put(
                         (
-                            bird_path(t_new_pos, destination_pos) + curr_cost + t_cost,
+                            heuristic(t_new_pos, destination_pos) + curr_cost + t_cost,
                             (t_new_pos, selected_path + [curr_pos]),
                         )
                     )

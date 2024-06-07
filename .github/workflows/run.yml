@@ -1,9 +1,10 @@
-name: Run
+name: run
 
 on: [push]
 
 jobs:
   build:
+    name: run
     runs-on: ubuntu-latest
     strategy:
       matrix:

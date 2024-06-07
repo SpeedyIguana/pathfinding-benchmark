@@ -9,7 +9,7 @@ import os
 from matplotlib import image as mpl_image
 from PIL import Image as pil_image
 import numpy as np
-from algo.map_utils import Block, GridMap
+from utils.map_utils import Block, GridMap
 
 _blocks = (
     (
