@@ -89,6 +89,7 @@ def map_load(
 def output_image_to_file(
     map_name: str,
     algo_name: str,
+    time_taken: int,
     mapp: GridMap,
     selected_path: List[Tuple[int, int]],
     clr_path=np.array([186 / 255, 48 / 255, 206 / 255], dtype="float32"),
@@ -98,6 +99,7 @@ def output_image_to_file(
     Args:
         map_name (str): helps with the outputted file name
         algo_name (str): helps with the outputted file name
+        time_taken (int): helps with the outputted file name
         mapp (Grid_Map): helps with the outputted file name
         selected_path (List[Tuple[int, int]]): helps with the outputted file name
         clr_path (np.array, optional): helps with the outputted
@@ -132,7 +134,9 @@ def output_image_to_file(
         "dist/",
         f"{os.path.splitext(map_name)[0]}"
         f"_{algo_name}_{pos_start}"
-        f"_{pos_end}.png",
+        f"_{pos_end}"
+        f"_timetaken-{time_taken}ns"
+        f".png",
     )
 
     os.makedirs(
