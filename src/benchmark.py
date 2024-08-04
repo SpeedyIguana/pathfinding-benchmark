@@ -69,8 +69,6 @@ for grid_map in a_to_b_maps:
 for map_name, pos_start, pos_end, resu in outcomes:
     output_image_to_file(
         map_name,
-        resu.algo_name,
-        resu.time_taken,
+        resu,
         a_to_b_map_dict.get(map_name),
-        resu.selected_path,
     )

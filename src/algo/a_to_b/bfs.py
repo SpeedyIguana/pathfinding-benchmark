@@ -3,13 +3,13 @@ Module contains the breadth first search algo implementation
 """
 
 from typing import Tuple, List, Set
-from queue import Queue
 from collections import deque
 from algo.a_to_b.a_to_b_abstract import AToBWalker
 from algo.result import Result
 from utils.map_utils import cost_between_points, GridMap, Move, get_new_position
 
 
+# pylint: disable=locally-disabled, too-few-public-methods
 class BFS(AToBWalker):
     """
     Here the Agen will use the BFS algorithm to find the most optimal path
