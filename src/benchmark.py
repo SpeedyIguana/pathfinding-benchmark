@@ -10,6 +10,7 @@ from algo.a_to_b.a_to_b_abstract import AToBWalker
 from algo.a_to_b.follow_compass import CompassWalker
 from algo.a_to_b.dijkstra import Dijkstra
 from algo.a_to_b.a_star import AStar
+from algo.a_to_b.bfs import BFS
 from algo.result import Result
 from utils.map_utils import GridMap
 from utils.file_utils import map_load, output_image_to_file
@@ -28,6 +29,7 @@ a_to_b_algos: List[AToBWalker] = [
     CompassWalker,
     Dijkstra,
     AStar,
+    BFS,
 ]
 
 outcomes: List[
@@ -43,13 +45,13 @@ time_start: int = 0
 time_end: int = 0
 res: Result = None
 
-for GridMap in a_to_b_maps:
+for grid_map in a_to_b_maps:
     for algo in a_to_b_algos:
-        for pos_end in GridMap.get_goals():
-            for pos_start in GridMap.get_starts():
+        for pos_end in grid_map.get_goals():
+            for pos_start in grid_map.get_starts():
                 time_start = time.perf_counter_ns()
                 res = algo.calculate_path(
-                    GridMap,
+                    grid_map,
                     pos_start,
                     pos_end,
                 )
@@ -57,7 +59,7 @@ for GridMap in a_to_b_maps:
                 res.time_taken = time_end - time_start
                 outcomes.append(
                     (
-                        GridMap.name,
+                        grid_map.name,
                         pos_start,
                         pos_end,
                         res,
@@ -67,7 +69,6 @@ for GridMap in a_to_b_maps:
 for map_name, pos_start, pos_end, resu in outcomes:
     output_image_to_file(
         map_name,
-        resu.algo_name,
+        resu,
         a_to_b_map_dict.get(map_name),
-        resu.selected_path,
     )

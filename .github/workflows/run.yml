@@ -22,3 +22,8 @@ jobs:
       - name: running code to see if it passes
         run: |
           python src/benchmark.py
+      - name: upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/

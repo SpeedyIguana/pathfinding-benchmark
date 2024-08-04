@@ -205,7 +205,7 @@ def cost_between_points(
     mapp: GridMap,
     pos_a: Tuple[int, int],
     pos_b: Tuple[int, int],
-) -> int:
+) -> int | float:
     """Given two positions, based on their blocks,
         a cost is calculated.
 

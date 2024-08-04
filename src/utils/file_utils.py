@@ -3,13 +3,13 @@ Holds all the utils to open map files and output to map files
 In the future, it should also hold outputting benchmarking graphs
 """
 
-from typing import List, Tuple
 import os
 
 from matplotlib import image as mpl_image
 from PIL import Image as pil_image
 import numpy as np
 from utils.map_utils import Block, GridMap
+from algo.result import Result
 
 _blocks = (
     (
@@ -88,9 +88,8 @@ def map_load(
 
 def output_image_to_file(
     map_name: str,
-    algo_name: str,
+    resu: Result,
     mapp: GridMap,
-    selected_path: List[Tuple[int, int]],
     clr_path=np.array([186 / 255, 48 / 255, 206 / 255], dtype="float32"),
 ) -> None:
     """Takes a map and outputs to a png with the chosen path
@@ -98,6 +97,7 @@ def output_image_to_file(
     Args:
         map_name (str): helps with the outputted file name
         algo_name (str): helps with the outputted file name
+        time_taken (int): helps with the outputted file name
         mapp (Grid_Map): helps with the outputted file name
         selected_path (List[Tuple[int, int]]): helps with the outputted file name
         clr_path (np.array, optional): helps with the outputted
@@ -110,8 +110,8 @@ def output_image_to_file(
         None
     """
 
-    pos_start = selected_path[0]
-    pos_end = selected_path[-1]
+    pos_start = resu.selected_path[0]
+    pos_end = resu.selected_path[-1]
 
     def map_block_to_clr(block: Block):
         for t_arr, t_block in _blocks:
@@ -121,7 +121,7 @@ def output_image_to_file(
 
     arr = list(map(lambda x: list(map(map_block_to_clr, x)), mapp.arr))
 
-    for pos in selected_path:
+    for pos in resu.selected_path:
         x, y = pos
         arr[y][x] = clr_path
 
@@ -131,8 +131,11 @@ def output_image_to_file(
     save_name: str = os.path.join(
         "dist/",
         f"{os.path.splitext(map_name)[0]}"
-        f"_{algo_name}_{pos_start}"
-        f"_{pos_end}.png",
+        f"_algo-{resu.algo_name}"
+        f"_start-{pos_start}"
+        f"_end-{pos_end}"
+        f"_timetaken-{resu.time_taken}ns"
+        f".png",
     )
 
     os.makedirs(
